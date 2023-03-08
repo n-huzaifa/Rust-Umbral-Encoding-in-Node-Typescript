@@ -19,8 +19,8 @@ const bob_pk = bob_sk.publicKey();
 const threshold = 2;
 
 // Read file and encode to a Uint8Array
-const readStream = fs.createReadStream("Input.mp4");
-const writeStream = fs.createWriteStream("output.mp4");
+const readStream = fs.createReadStream("test_image.jpg");           //Add path to the file you wish to encrypt
+const writeStream = fs.createWriteStream("output.jpg");
 
 let totalBytesRead = 0;
 readStream.on("data", chunk => {
@@ -59,9 +59,9 @@ readStream.on("data", chunk => {
 
   // Finally, Bob opens the capsule by using at least `threshold` cfrags,
   // and then decrypts the re-encrypted ciphertext.
-  const plaintext_bob = umbral.decryptReencrypted(bob_sk, alice_pk, capsule, collectedCfrags, ciphertext);
-  console.log(plaintext_bob)
-  writeStream.write(plaintext_bob);
+  const decrypted_bob = umbral.decryptReencrypted(bob_sk, alice_pk, capsule, collectedCfrags, ciphertext);
+  console.log(decrypted_bob)
+  writeStream.write(decrypted_bob);
 });
 
 readStream.on("end", () => {
